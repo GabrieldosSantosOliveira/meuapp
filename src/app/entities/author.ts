@@ -1,4 +1,4 @@
-import { Replace } from '@/helpers/replace';
+import { Replace } from '@/helpers/index';
 import { randomUUID } from 'node:crypto';
 export interface AuthorProps {
   id: string;
