@@ -1,19 +1,23 @@
 {
   "compilerOptions": {
-    "forceConsistentCasingInFileNames": true,
+    "module": "CommonJS",
+    "declaration": true,
+    "outDir": "dist",
+    "removeComments": true,
+    "target": "ES6",
     "esModuleInterop": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
     "alwaysStrict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noImplicitOverride": true,
-    "skipLibCheck": true
+    "baseUrl": ".",
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "paths": {
+      "@/app/*": ["./src/app/*"],
+      "@/helpers/*": ["./src/helpers/*"],
+      "@/infra/*": ["./src/infra/*"],
+      "@/interface/*": ["./src/interface/*"],
+      "@/main/*": ["./src/main/*"],
+      "@/validations/*": ["./src/validations/*"],
+      "@/test/*": ["./test/*"]
+    }
   }
 }
