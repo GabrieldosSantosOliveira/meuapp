@@ -40,7 +40,7 @@ const makeSut = () => {
   );
   return { sut, emailValidatorSpy };
 };
-describe('Add Author', () => {
+describe('Add Author With Email Controller', () => {
   it('should return 400 if no email is provided', async () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle(
