@@ -6,6 +6,9 @@ export interface AuthorProps {
   lastName: string;
   password?: string;
   email: string;
+  googleId?: string;
+  resetPasswordExpires?: Date;
+  resetPasswordToken?: string;
   picture?: string;
   updatedAt: Date;
   createdAt: Date;
@@ -26,6 +29,24 @@ export class Author {
       id: props.id || randomUUID(),
       ...props,
     };
+  }
+  public get googleId(): string | undefined {
+    return this.props.googleId;
+  }
+  public set googleId(value: string | undefined) {
+    this.props.googleId = value;
+  }
+  public get resetPasswordExpires(): Date | undefined {
+    return this.props.resetPasswordExpires;
+  }
+  public set resetPasswordExpires(value: Date | undefined) {
+    this.props.resetPasswordExpires = value;
+  }
+  public get resetPasswordToken(): string | undefined {
+    return this.props.resetPasswordToken;
+  }
+  public set resetPasswordToken(value: string | undefined) {
+    this.props.resetPasswordToken = value;
   }
   public get id(): string {
     return this.props.id;
