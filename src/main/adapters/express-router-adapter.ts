@@ -7,6 +7,7 @@ export class ExpressRouterAdapter {
     return async (req: Request, res: Response) => {
       const httpRequest: IHttpRequest = {
         body: req.body,
+        user: req.user,
       };
       const httpResponse = await controller.handle(httpRequest);
       res.status(httpResponse.statusCode).json(httpResponse.body);
