@@ -1,6 +1,7 @@
-import express from 'express';
-const app = express();
-const PORT = process.env.PORT || 3333;
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+import { env } from './config/env';
+import { setupApp } from './config/setup-app';
+
+const { app } = setupApp();
+app.listen(env.PORT, () => {
+  console.log(`Server running at http://localhost:${env.PORT}`);
 });
