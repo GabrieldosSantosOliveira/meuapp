@@ -4,6 +4,7 @@
     "declaration": true,
     "outDir": "dist",
     "removeComments": true,
+    "strict": true,
     "target": "ES6",
     "esModuleInterop": true,
     "alwaysStrict": true,
@@ -17,7 +18,8 @@
       "@/interface/*": ["./src/interface/*"],
       "@/main/*": ["./src/main/*"],
       "@/validations/*": ["./src/validations/*"],
-      "@/test/*": ["./test/*"]
+      "@/test/*": ["./test/*"],
+      "@/utils/*": ["./src/utils/*"]
     }
   }
 }
