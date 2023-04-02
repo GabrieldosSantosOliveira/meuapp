@@ -1,4 +1,4 @@
-import { MissingParamError } from '@/infra/http/error';
+import { MissingParamError } from '@/utils/index';
 
 import { ValidateMissingParamsAdapter } from './validation-missing-params';
 

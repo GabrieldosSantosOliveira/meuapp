@@ -1,5 +1,5 @@
-import { MissingParamError } from '@/infra/http/error';
 import { DefaultFieldType, ValidateMissingParams } from '@/interface/index';
+import { MissingParamError } from '@/utils/index';
 
 export class ValidateMissingParamsAdapter implements ValidateMissingParams {
   validate<T extends DefaultFieldType>(
