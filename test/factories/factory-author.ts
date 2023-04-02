@@ -6,6 +6,7 @@ export const makeAuthor = (author: Partial<AuthorProps> = {}) => {
     lastName: 'any_last_name',
     password: 'any_password',
     picture: 'any_picture',
+    googleId: 'any_google_id',
     ...author,
   });
 };
