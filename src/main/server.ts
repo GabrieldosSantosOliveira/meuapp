@@ -1,5 +1,4 @@
-import { env } from './config/env';
-import { setupApp } from './config/setup-app';
+import { env, setupApp } from './config';
 
 const { app } = setupApp();
 app.listen(env.PORT, () => {

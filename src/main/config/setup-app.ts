@@ -1,9 +1,7 @@
 import express from 'express';
 
-import { contentType } from '../middlewares/content-type';
-import { cors } from '../middlewares/cors';
-import { jsonParser } from '../middlewares/json-parser';
-import { setupRoutes } from './setup-routes';
+import { contentType, cors, jsonParser } from '../middlewares';
+import { setupRoutes } from './index';
 export const setupApp = () => {
   const app = express();
   app.disable('x-powered-by');
