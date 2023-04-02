@@ -57,4 +57,10 @@ export class HttpResponse {
       statusCode: HttpStatus.BAD_REQUEST,
     };
   }
+  static customError(statusCode: number, error: Error): IHttpResponse {
+    return {
+      body: { error: error.message },
+      statusCode,
+    };
+  }
 }
