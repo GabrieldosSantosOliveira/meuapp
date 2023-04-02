@@ -1,8 +1,18 @@
 import { HttpResponse, HttpStatus } from '@/helpers/http';
-import { IHttpRequest, EmailValidator } from '@/interface/index';
+import {
+  IHttpRequest,
+  EmailValidator,
+  IAddAuthorWithEmailUseCase,
+  IAddAuthorWithEmailUseCaseReturn,
+} from '@/interface/index';
+import { ConflictAuthorAlreadyExistsException } from '@/utils/http/exception/conflict-author-already-exists-exception';
+import {
+  ConflictAuthorAlreadyExists,
+  InvalidParamError,
+  MissingParamError,
+} from '@/utils/index';
 import { ValidateMissingParamsAdapter } from '@/validations/validation-missing-params';
 
-import { InvalidParamError, MissingParamError } from '../error';
 import {
   AddAuthorWithEmailController,
   AddAuthorWithEmailRequest,
@@ -32,13 +42,55 @@ const makeValidatorSpy = () => {
   emailValidatorSpy.isEmailValid = true;
   return { emailValidatorSpy };
 };
+class AddAuthorWithEmailUseCase implements IAddAuthorWithEmailUseCase {
+  async handle(): Promise<IAddAuthorWithEmailUseCaseReturn> {
+    return {
+      accessToken: 'any_access_token',
+      refreshToken: 'any_refresh_token',
+    };
+  }
+}
+class AddAuthorWithEmailUseCaseWithThrowException
+  implements IAddAuthorWithEmailUseCase
+{
+  async handle(): Promise<IAddAuthorWithEmailUseCaseReturn> {
+    throw new ConflictAuthorAlreadyExistsException();
+    return {
+      accessToken: 'any_access_token',
+      refreshToken: 'any_refresh_token',
+    };
+  }
+}
+class AddAuthorWithEmailUseCaseWithThroError
+  implements IAddAuthorWithEmailUseCase
+{
+  async handle(): Promise<IAddAuthorWithEmailUseCaseReturn> {
+    throw new Error();
+    return {
+      accessToken: 'any_access_token',
+      refreshToken: 'any_refresh_token',
+    };
+  }
+}
+const makeAddAuthorWithEmailUseCase = () => {
+  const addAuthorWithEmailUseCase = new AddAuthorWithEmailUseCase();
+  return { addAuthorWithEmailUseCase };
+};
+const makeAddAuthorWithEmailUseCaseWithThrowException = () => {
+  const addAuthorWithEmailUseCaseWithThrowException =
+    new AddAuthorWithEmailUseCaseWithThrowException();
+  return { addAuthorWithEmailUseCaseWithThrowException };
+};
+
 const makeSut = () => {
   const { emailValidatorSpy } = makeValidatorSpy();
-  const sut = new AddAuthorWithEmailController(
-    emailValidatorSpy,
-    new ValidateMissingParamsAdapter(),
-  );
-  return { sut, emailValidatorSpy };
+  const { addAuthorWithEmailUseCase } = makeAddAuthorWithEmailUseCase();
+  const sut = new AddAuthorWithEmailController({
+    addAuthorWithEmailUseCase: addAuthorWithEmailUseCase,
+    emailValidator: emailValidatorSpy,
+    validateMissingParams: new ValidateMissingParamsAdapter(),
+  });
+  return { sut, emailValidatorSpy, addAuthorWithEmailUseCase };
 };
 describe('Add Author With Email Controller', () => {
   it('should return 400 if no email is provided', async () => {
@@ -199,5 +251,42 @@ describe('Add Author With Email Controller', () => {
       HttpResponse.badRequest(new InvalidParamError('email is not valid')),
     );
     expect(httpResponse.statusCode).toBe(HttpStatus.BAD_REQUEST);
+  });
+  it('should return 201 if success', async () => {
+    const { sut } = makeSut();
+    const httpResponse = await sut.handle(makeRequest());
+    expect(httpResponse).toEqual(
+      HttpResponse.created({
+        accessToken: 'any_access_token',
+        refreshToken: 'any_refresh_token',
+      }),
+    );
+  });
+  it('should return 409 if AddAuthorWithEmailUseCase throw ConflictAuthorAlreadyExistsException', async () => {
+    const { emailValidatorSpy } = makeValidatorSpy();
+    const { addAuthorWithEmailUseCaseWithThrowException } =
+      makeAddAuthorWithEmailUseCaseWithThrowException();
+    const sut = new AddAuthorWithEmailController({
+      addAuthorWithEmailUseCase: addAuthorWithEmailUseCaseWithThrowException,
+      emailValidator: emailValidatorSpy,
+      validateMissingParams: new ValidateMissingParamsAdapter(),
+    });
+    const httpResponse = await sut.handle(makeRequest());
+    expect(httpResponse).toEqual(
+      HttpResponse.customError(
+        HttpStatus.CONFLICT,
+        new ConflictAuthorAlreadyExists(),
+      ),
+    );
+  });
+  it('should return 500 if AddAuthorWithEmailUseCase throw Error', async () => {
+    const { emailValidatorSpy } = makeValidatorSpy();
+    const sut = new AddAuthorWithEmailController({
+      addAuthorWithEmailUseCase: new AddAuthorWithEmailUseCaseWithThroError(),
+      emailValidator: emailValidatorSpy,
+      validateMissingParams: new ValidateMissingParamsAdapter(),
+    });
+    const httpResponse = await sut.handle(makeRequest());
+    expect(httpResponse).toEqual(HttpResponse.serverError());
   });
 });
