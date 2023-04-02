@@ -9,3 +9,50 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Author {
+  id                   String    @id
+  firstName            String    @db.VarChar(255)
+  lastName             String    @db.VarChar(255)
+  email                String    @unique @db.VarChar(255)
+  password             String?   @db.VarChar(255)
+  googleId             String?   @db.VarChar(255)
+  resetPasswordExpires DateTime?
+  resetPasswordToken   String?   @db.VarChar(255)
+  picture              String?
+  updatedAt            DateTime  @updatedAt()
+  createdAt            DateTime  @default(now())
+  Notice               Notice[]
+}
+
+model Category {
+  id        String   @id
+  title     String
+  updatedAt DateTime @updatedAt()
+  createdAt DateTime @default(now())
+  Notice    Notice[]
+}
+
+model Content {
+  id        String   @id
+  heading   String?
+  text      String
+  updatedAt DateTime @updatedAt()
+  createdAt DateTime @default(now())
+  Notice    Notice   @relation(fields: [noticeId], references: [id])
+  noticeId  String
+}
+
+model Notice {
+  id          String    @id
+  title       String
+  description String
+  image       String
+  updatedAt   DateTime
+  createdAt   DateTime
+  authorId    String
+  Author      Author    @relation(fields: [authorId], references: [id])
+  categoryId  String
+  Category    Category  @relation(fields: [categoryId], references: [id])
+  Content     Content[]
+}
