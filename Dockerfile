@@ -27,4 +27,5 @@ CMD [ "npm", "run", "dev" ]
 FROM base AS test
 RUN npm ci
 COPY . .
+RUN npx prisma generate
 CMD [ "npm", "run", "test" ]
