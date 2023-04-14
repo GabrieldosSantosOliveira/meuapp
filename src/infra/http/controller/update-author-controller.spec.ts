@@ -111,7 +111,6 @@ describe('UpdateAuthorController', () => {
   it('should call updateAuthorUseCase with correct params', async () => {
     const { sut, updateAuthorUseCaseSpy } = makeSut();
     await sut.handle(makeRequest());
-    console.log(updateAuthorUseCaseSpy.data);
     expect(updateAuthorUseCaseSpy.data).toEqual({
       ...makeRequest().body,
       user: { sub: 'any_sub' },
