@@ -1,1 +1,2 @@
-export * from './in-memory-load-author-by-email-repository';
+export * from './in-memory-author-repository';
+export * from './in-memory-category-repository';
