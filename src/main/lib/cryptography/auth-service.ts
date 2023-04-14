@@ -3,7 +3,7 @@ import { JwtAdapter } from '@/infra/cryptography';
 import { env } from '@/main/config/env';
 
 const jwtAdapter = new JwtAdapter();
-const ONE_MINUTE = 60;
+const ONE_MINUTE = 60 * 60 * 24;
 const ONE_WEEK = 60 * 60 * 24 * 7;
 const authService = new AuthService({
   decrypt: jwtAdapter,

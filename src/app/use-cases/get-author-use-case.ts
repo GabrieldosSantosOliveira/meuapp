@@ -1,6 +1,6 @@
 import { Payload } from '@/interface/auth';
-import { IGetAuthorUseCase } from '@/interface/use-cases/get-author';
-import { AuthorNotFoundException } from '@/utils/http/exception/author-not-found-exception';
+import { IGetAuthorUseCase } from '@/interface/use-cases';
+import { AuthorNotFoundException } from '@/utils/index';
 
 import { Author } from '../entities';
 import { LoadAuthorByIdRepository } from '../repositories';
