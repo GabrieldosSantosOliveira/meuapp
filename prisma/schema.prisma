@@ -27,7 +27,7 @@ model Author {
 
 model Category {
   id        String   @id
-  title     String
+  title     String   @unique
   updatedAt DateTime @updatedAt()
   createdAt DateTime @default(now())
   Notice    Notice[]
