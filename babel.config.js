@@ -5,12 +5,14 @@ module.exports = {
       '@babel/preset-env',
       {
         targets: {
-          node: '16',
+          node: 'current',
         },
       },
     ],
   ],
   plugins: [
+    ['@babel/plugin-proposal-decorators', { legacy: true }],
+    '@babel/plugin-proposal-class-properties',
     [
       'module-resolver',
       {
