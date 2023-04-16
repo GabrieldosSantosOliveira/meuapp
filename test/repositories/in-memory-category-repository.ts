@@ -13,7 +13,9 @@ export class InMemoryCategoryRepository
     this.categorys.push(category);
   }
   async findByTitle(title: string): Promise<Category | null> {
-    const category = this.categorys.find(({ title }) => title === title);
+    const category = this.categorys.find(
+      (category) => category.title === title,
+    );
     if (!category) {
       return null;
     }
