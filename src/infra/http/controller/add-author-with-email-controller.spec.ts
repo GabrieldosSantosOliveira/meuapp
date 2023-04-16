@@ -1,17 +1,11 @@
 import { HttpResponse, HttpStatus } from '@/helpers/http';
 import {
   IHttpRequest,
-  EmailValidator,
   IAddAuthorWithEmailUseCase,
   IAddAuthorWithEmailUseCaseReturn,
 } from '@/interface/index';
 import { ConflictAuthorAlreadyExistsException } from '@/utils/http/exception/conflict-author-already-exists-exception';
-import {
-  ConflictAuthorAlreadyExists,
-  InvalidParamError,
-  MissingParamError,
-} from '@/utils/index';
-import { ValidateMissingParamsAdapter } from '@/validations/validation-missing-params';
+import { ConflictAuthorAlreadyExists } from '@/utils/index';
 
 import {
   AddAuthorWithEmailController,
@@ -22,26 +16,16 @@ const makeRequest = (
 ): IHttpRequest<AddAuthorWithEmailRequest> => {
   return {
     body: {
-      email: 'any_email',
+      email: 'any_email@mail.com',
       firstName: 'any_first_name',
       lastName: 'any_last_name',
       password: 'any_password',
-      picture: 'any_picture',
+      picture: 'https://google.com',
       ...param,
     },
   };
 };
-const makeValidatorSpy = () => {
-  class EmailValidatorSpy implements EmailValidator {
-    isEmailValid!: boolean;
-    isValid(): boolean {
-      return this.isEmailValid;
-    }
-  }
-  const emailValidatorSpy = new EmailValidatorSpy();
-  emailValidatorSpy.isEmailValid = true;
-  return { emailValidatorSpy };
-};
+
 class AddAuthorWithEmailUseCase implements IAddAuthorWithEmailUseCase {
   async handle(): Promise<IAddAuthorWithEmailUseCaseReturn> {
     return {
@@ -55,10 +39,6 @@ class AddAuthorWithEmailUseCaseWithThrowException
 {
   async handle(): Promise<IAddAuthorWithEmailUseCaseReturn> {
     throw new ConflictAuthorAlreadyExistsException();
-    return {
-      accessToken: 'any_access_token',
-      refreshToken: 'any_refresh_token',
-    };
   }
 }
 class AddAuthorWithEmailUseCaseWithThroError
@@ -66,10 +46,6 @@ class AddAuthorWithEmailUseCaseWithThroError
 {
   async handle(): Promise<IAddAuthorWithEmailUseCaseReturn> {
     throw new Error();
-    return {
-      accessToken: 'any_access_token',
-      refreshToken: 'any_refresh_token',
-    };
   }
 }
 const makeAddAuthorWithEmailUseCase = () => {
@@ -83,14 +59,11 @@ const makeAddAuthorWithEmailUseCaseWithThrowException = () => {
 };
 
 const makeSut = () => {
-  const { emailValidatorSpy } = makeValidatorSpy();
   const { addAuthorWithEmailUseCase } = makeAddAuthorWithEmailUseCase();
   const sut = new AddAuthorWithEmailController({
     addAuthorWithEmailUseCase: addAuthorWithEmailUseCase,
-    emailValidator: emailValidatorSpy,
-    validateMissingParams: new ValidateMissingParamsAdapter(),
   });
-  return { sut, emailValidatorSpy, addAuthorWithEmailUseCase };
+  return { sut, addAuthorWithEmailUseCase };
 };
 describe('Add Author With Email Controller', () => {
   it('should return 400 if no email is provided', async () => {
@@ -100,9 +73,7 @@ describe('Add Author With Email Controller', () => {
         email: undefined,
       }),
     );
-    expect(httpResponse).toEqual(
-      HttpResponse.badRequest(new MissingParamError('email')),
-    );
+
     expect(httpResponse.statusCode).toBe(HttpStatus.BAD_REQUEST);
   });
   it('should return 400 if no lastName is provided', async () => {
@@ -112,9 +83,7 @@ describe('Add Author With Email Controller', () => {
         lastName: undefined,
       }),
     );
-    expect(httpResponse).toEqual(
-      HttpResponse.badRequest(new MissingParamError('lastName')),
-    );
+
     expect(httpResponse.statusCode).toBe(HttpStatus.BAD_REQUEST);
   });
   it('should return 400 if no firstName is provided', async () => {
@@ -124,9 +93,7 @@ describe('Add Author With Email Controller', () => {
         firstName: undefined,
       }),
     );
-    expect(httpResponse).toEqual(
-      HttpResponse.badRequest(new MissingParamError('firstName')),
-    );
+
     expect(httpResponse.statusCode).toBe(HttpStatus.BAD_REQUEST);
   });
   it('should return 400 if no password is provided', async () => {
@@ -136,9 +103,7 @@ describe('Add Author With Email Controller', () => {
         password: undefined,
       }),
     );
-    expect(httpResponse).toEqual(
-      HttpResponse.badRequest(new MissingParamError('password')),
-    );
+
     expect(httpResponse.statusCode).toBe(HttpStatus.BAD_REQUEST);
   });
   it('should return 400 if password less than 5 characters', async () => {
@@ -153,17 +118,8 @@ describe('Add Author With Email Controller', () => {
         password: 'a'.repeat(256),
       }),
     );
-    expect(httpResponseLess).toEqual(
-      HttpResponse.badRequest(
-        new InvalidParamError('password must be between 5 and 255 characters'),
-      ),
-    );
+
     expect(httpResponseLess.statusCode).toBe(HttpStatus.BAD_REQUEST);
-    expect(httpResponseMore).toEqual(
-      HttpResponse.badRequest(
-        new InvalidParamError('password must be between 5 and 255 characters'),
-      ),
-    );
     expect(httpResponseMore.statusCode).toBe(HttpStatus.BAD_REQUEST);
   });
   it('should return 400 if lastName less than 5 characters or more than 255 characters', async () => {
@@ -178,17 +134,8 @@ describe('Add Author With Email Controller', () => {
         lastName: 'a'.repeat(256),
       }),
     );
-    expect(httpResponseLess).toEqual(
-      HttpResponse.badRequest(
-        new InvalidParamError('lastName must be between 5 and 255 characters'),
-      ),
-    );
+
     expect(httpResponseLess.statusCode).toBe(HttpStatus.BAD_REQUEST);
-    expect(httpResponseMore).toEqual(
-      HttpResponse.badRequest(
-        new InvalidParamError('lastName must be between 5 and 255 characters'),
-      ),
-    );
     expect(httpResponseMore.statusCode).toBe(HttpStatus.BAD_REQUEST);
   });
   it('should return 400 if firstName less than 5 characters or more than 255 characters', async () => {
@@ -203,17 +150,8 @@ describe('Add Author With Email Controller', () => {
         firstName: 'a'.repeat(256),
       }),
     );
-    expect(httpResponseLess).toEqual(
-      HttpResponse.badRequest(
-        new InvalidParamError('firstName must be between 5 and 255 characters'),
-      ),
-    );
+
     expect(httpResponseLess.statusCode).toBe(HttpStatus.BAD_REQUEST);
-    expect(httpResponseMore).toEqual(
-      HttpResponse.badRequest(
-        new InvalidParamError('firstName must be between 5 and 255 characters'),
-      ),
-    );
     expect(httpResponseMore.statusCode).toBe(HttpStatus.BAD_REQUEST);
   });
   it('should return 400 if email less than 5 characters or more than 255 characters', async () => {
@@ -228,29 +166,16 @@ describe('Add Author With Email Controller', () => {
         email: 'a'.repeat(256),
       }),
     );
-    expect(httpResponseLessCharacters).toEqual(
-      HttpResponse.badRequest(
-        new InvalidParamError('email must be between 5 and 255 characters'),
-      ),
-    );
+
     expect(httpResponseLessCharacters.statusCode).toBe(HttpStatus.BAD_REQUEST);
-    expect(httpResponseMoreCharacters).toEqual(
-      HttpResponse.badRequest(
-        new InvalidParamError('email must be between 5 and 255 characters'),
-      ),
-    );
     expect(httpResponseMoreCharacters.statusCode).toBe(HttpStatus.BAD_REQUEST);
   });
   it('should return 400 if invalid email is provided', async () => {
-    const { sut, emailValidatorSpy } = makeSut();
-    emailValidatorSpy.isEmailValid = false;
+    const { sut } = makeSut();
     const httpResponse = await sut.handle(
-      makeRequest({ email: 'any_invalid@mail.com' }),
+      makeRequest({ email: 'any_invalid' }),
     );
-    expect(httpResponse).toEqual(
-      HttpResponse.badRequest(new InvalidParamError('email is not valid')),
-    );
-    expect(httpResponse.statusCode).toBe(HttpStatus.BAD_REQUEST);
+    expect(httpResponse.statusCode).toEqual(HttpStatus.BAD_REQUEST);
   });
   it('should return 201 if success', async () => {
     const { sut } = makeSut();
@@ -263,13 +188,10 @@ describe('Add Author With Email Controller', () => {
     );
   });
   it('should return 409 if AddAuthorWithEmailUseCase throw ConflictAuthorAlreadyExistsException', async () => {
-    const { emailValidatorSpy } = makeValidatorSpy();
     const { addAuthorWithEmailUseCaseWithThrowException } =
       makeAddAuthorWithEmailUseCaseWithThrowException();
     const sut = new AddAuthorWithEmailController({
       addAuthorWithEmailUseCase: addAuthorWithEmailUseCaseWithThrowException,
-      emailValidator: emailValidatorSpy,
-      validateMissingParams: new ValidateMissingParamsAdapter(),
     });
     const httpResponse = await sut.handle(makeRequest());
     expect(httpResponse).toEqual(
@@ -280,11 +202,8 @@ describe('Add Author With Email Controller', () => {
     );
   });
   it('should return 500 if AddAuthorWithEmailUseCase throw Error', async () => {
-    const { emailValidatorSpy } = makeValidatorSpy();
     const sut = new AddAuthorWithEmailController({
       addAuthorWithEmailUseCase: new AddAuthorWithEmailUseCaseWithThroError(),
-      emailValidator: emailValidatorSpy,
-      validateMissingParams: new ValidateMissingParamsAdapter(),
     });
     const httpResponse = await sut.handle(makeRequest());
     expect(httpResponse).toEqual(HttpResponse.serverError());

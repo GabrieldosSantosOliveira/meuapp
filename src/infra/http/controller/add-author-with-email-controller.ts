@@ -3,12 +3,11 @@ import {
   Controller,
   IHttpRequest,
   IHttpResponse,
-  EmailValidator,
-  ValidateMissingParams,
   IAddAuthorWithEmailUseCase,
 } from '@/interface/index';
-import { InvalidParamError } from '@/utils/index';
+import { validate } from 'class-validator';
 
+import { AddAuthorWithEmailBodyDto } from '../dtos/add-author-with-email-body.dto';
 import { ExceptionFilter } from '../error';
 
 export interface AddAuthorWithEmailRequest {
@@ -19,8 +18,6 @@ export interface AddAuthorWithEmailRequest {
   picture?: string;
 }
 export interface AddAuthorWithEmailControllerParams {
-  emailValidator: EmailValidator;
-  validateMissingParams: ValidateMissingParams;
   addAuthorWithEmailUseCase: IAddAuthorWithEmailUseCase;
 }
 export class AddAuthorWithEmailController implements Controller {
@@ -29,56 +26,16 @@ export class AddAuthorWithEmailController implements Controller {
     request: IHttpRequest<AddAuthorWithEmailRequest>,
   ): Promise<IHttpResponse> {
     try {
-      const noHasParam = this.params.validateMissingParams.validate(
-        ['lastName', 'firstName', 'password', 'email'],
-        request.body,
-      );
-      if (noHasParam) {
-        return HttpResponse.badRequest(noHasParam);
-      }
-      if (
-        request.body.password.length < 5 ||
-        request.body.password.length > 255
-      ) {
-        return HttpResponse.badRequest(
-          new InvalidParamError(
-            'password must be between 5 and 255 characters',
-          ),
-        );
-      }
-      if (
-        request.body.firstName.length < 5 ||
-        request.body.firstName.length > 255
-      ) {
-        return HttpResponse.badRequest(
-          new InvalidParamError(
-            'firstName must be between 5 and 255 characters',
-          ),
-        );
-      }
-      if (
-        request.body.lastName.length < 5 ||
-        request.body.lastName.length > 255
-      ) {
-        return HttpResponse.badRequest(
-          new InvalidParamError(
-            'lastName must be between 5 and 255 characters',
-          ),
-        );
-      }
-      if (request.body.email.length < 5 || request.body.email.length > 255) {
-        return HttpResponse.badRequest(
-          new InvalidParamError('email must be between 5 and 255 characters'),
-        );
-      }
-      const isValid = this.params.emailValidator.isValid(request.body.email);
-      if (!isValid) {
-        return HttpResponse.badRequest(
-          new InvalidParamError('email is not valid'),
-        );
+      const addAuthorWithEmailBodyDto = new AddAuthorWithEmailBodyDto();
+      Object.assign(addAuthorWithEmailBodyDto, request.body);
+      const hasErrors = await validate(addAuthorWithEmailBodyDto);
+      if (hasErrors.length > 0) {
+        return HttpResponse.badRequest(hasErrors);
       }
       const accessTokenAndRefreshTokenOrError =
-        await this.params.addAuthorWithEmailUseCase.handle(request.body);
+        await this.params.addAuthorWithEmailUseCase.handle(
+          addAuthorWithEmailBodyDto,
+        );
       return HttpResponse.created(accessTokenAndRefreshTokenOrError);
     } catch (error) {
       return ExceptionFilter.handle(error);
