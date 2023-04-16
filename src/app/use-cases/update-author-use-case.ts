@@ -24,6 +24,7 @@ export class UpdateAuthorUseCase implements IUpdateAuthorUseCase {
     if (data.firstName) hasAuthor.firstName = data.firstName;
     if (data.lastName) hasAuthor.lastName = data.lastName;
     if (data.picture) hasAuthor.picture = data.picture;
+    hasAuthor.updatedAt = new Date();
     await this.params.saveAuthorRepository.save(hasAuthor);
   }
 }
