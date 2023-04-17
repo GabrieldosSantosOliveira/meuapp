@@ -2,6 +2,10 @@ import { IHttpResponse } from '@/interface/index';
 
 import { ServerError, UnauthorizedError } from '../errors';
 import { HttpStatus } from './';
+export interface HttpResponseCustomErrorOptions {
+  error: Error;
+  cause?: Error;
+}
 export class HttpResponse {
   static ok(body: unknown): IHttpResponse {
     return {
@@ -23,7 +27,7 @@ export class HttpResponse {
   }
   static notFound(error: Error): IHttpResponse {
     return {
-      body: { error },
+      body: { error: error.message },
       statusCode: HttpStatus.NOT_FOUND,
     };
   }
@@ -51,15 +55,20 @@ export class HttpResponse {
       statusCode: HttpStatus.FORBIDDEN,
     };
   }
-  static badRequest(error: Error): IHttpResponse {
+  static badRequest(error: unknown): IHttpResponse {
     return {
-      body: { error: error.message },
+      body: { error },
       statusCode: HttpStatus.BAD_REQUEST,
     };
   }
-  static customError(statusCode: number, error: Error): IHttpResponse {
+  static customError(
+    statusCode: number,
+    options: HttpResponseCustomErrorOptions,
+  ): IHttpResponse {
     return {
-      body: { error: error.message },
+      body: {
+        error: options.error.message,
+      },
       statusCode,
     };
   }
