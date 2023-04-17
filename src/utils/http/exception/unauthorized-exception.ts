@@ -4,9 +4,8 @@ import { HttpException } from './http-exception';
 
 export class UnauthorizedException extends HttpException {
   constructor() {
-    super({
+    super(HttpStatus.UNAUTHORIZED_ERROR, {
       error: new UnauthorizedError(),
-      statusCode: HttpStatus.UNAUTHORIZED_ERROR,
     });
   }
 }

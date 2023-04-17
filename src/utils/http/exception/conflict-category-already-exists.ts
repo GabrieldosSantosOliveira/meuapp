@@ -5,8 +5,7 @@ import { HttpException } from './http-exception';
 
 export class ConflictCategoryAlreadyExistsException extends HttpException {
   constructor() {
-    super({
-      statusCode: HttpStatus.CONFLICT,
+    super(HttpStatus.CONFLICT, {
       error: new ConflictCategoryAlreadyExists(),
     });
   }

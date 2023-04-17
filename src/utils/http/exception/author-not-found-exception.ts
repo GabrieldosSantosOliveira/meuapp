@@ -5,9 +5,8 @@ import { HttpException } from './http-exception';
 
 export class AuthorNotFoundException extends HttpException {
   constructor() {
-    super({
+    super(HttpStatus.NOT_FOUND, {
       error: new AuthorNotFoundError(),
-      statusCode: HttpStatus.NOT_FOUND,
     });
   }
 }

@@ -1,16 +1,20 @@
 export interface HttpExceptionProps {
-  statusCode: number;
   error: Error;
+  cause?: Error;
 }
 export class HttpException extends Error {
-  constructor(private readonly props: HttpExceptionProps) {
-    super('HttpException');
+  constructor(
+    private readonly statusCode: number,
+    private readonly options: HttpExceptionProps,
+  ) {
+    super();
     this.name = 'HttpException';
   }
-  public get statusCode(): number {
-    return this.props.statusCode;
+  public getStatusCode(): number {
+    return this.statusCode;
   }
-  public get error(): Error {
-    return this.props.error;
+
+  public getOptions() {
+    return this.options;
   }
 }

@@ -5,9 +5,8 @@ import { HttpException } from './http-exception';
 
 export class CategoryNotFoundException extends HttpException {
   constructor() {
-    super({
+    super(HttpStatus.NOT_FOUND, {
       error: new CategoryNotFoundError(),
-      statusCode: HttpStatus.NOT_FOUND,
     });
   }
 }
