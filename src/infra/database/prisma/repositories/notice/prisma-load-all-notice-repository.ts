@@ -1,14 +1,22 @@
 import { Notice } from '@/app/entities';
-import { LoadAllNoticeRepository } from '@/app/repositories';
+import {
+  LoadAllNoticeRepository,
+  LoadAllNoticeRepositoryOptions,
+} from '@/app/repositories';
 
 import { PrismaNoticeMapper } from '../../mappers/prisma-notice-mapper';
 import { PrismaService } from '../../prisma-service';
 
 export class PrismaLoadAllNoticeRepository implements LoadAllNoticeRepository {
   constructor(private readonly prismaService: PrismaService) {}
-  async findAll(): Promise<Notice[]> {
+  async findAllByPage(
+    options: LoadAllNoticeRepositoryOptions,
+  ): Promise<Notice[]> {
+    const SKIP = Math.max((options.page - 1) * options.sizeForPage, 0);
     const rawNotices = await this.prismaService.notice.findMany({
       include: { Author: true, Category: true, Content: true },
+      take: options.sizeForPage,
+      skip: SKIP,
     });
 
     return rawNotices.map((rawNotice) =>
