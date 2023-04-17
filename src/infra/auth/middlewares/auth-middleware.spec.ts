@@ -21,6 +21,8 @@ describe('AuthMiddleware', () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle({
       body: {},
+      params: {},
+      query: {},
     });
     expect(httpResponse).toEqual(HttpResponse.unauthorizedError());
   });
@@ -29,6 +31,8 @@ describe('AuthMiddleware', () => {
     const httpResponse = await sut.handle({
       body: {},
       accessToken: 'any_access_token',
+      params: {},
+      query: {},
     });
     expect(httpResponse).toEqual({
       user: { sub: 'any_id' },
@@ -41,6 +45,8 @@ describe('AuthMiddleware', () => {
     const sut = new AuthMiddleware({ authService: authServiceSpyWithError });
     const httpResponse = sut.handle({
       body: {},
+      params: {},
+      query: {},
       accessToken: 'any_access_token',
     });
     expect(httpResponse).rejects.toThrow();

@@ -1,8 +1,8 @@
 import { HttpResponse, HttpStatus } from '@/helpers/http';
 import { IAuthService, Payload } from '@/interface/auth';
 import { IHttpRequest, IHttpResponse } from '@/interface/http';
+import { DefaultFieldType } from '@/interface/http/http-request';
 import { IMiddleware } from '@/interface/middlewares/middleware';
-import { DefaultFieldType } from '@/interface/validations';
 export interface AuthMiddlewareParams {
   authService: IAuthService;
 }
