@@ -41,7 +41,7 @@ const makeSut = (params: Partial<GetAuthorControllerParams> = {}) => {
 describe('GetAuthorController', () => {
   it('should return 500 if accessToken is not provided', async () => {
     const { sut } = makeSut();
-    const httpResponse = await sut.handle({ body: {} });
+    const httpResponse = await sut.handle({ body: {}, params: {}, query: {} });
     expect(httpResponse).toEqual(HttpResponse.serverError());
   });
   it('should call GetAuthorUseCase with correct params', async () => {
@@ -51,6 +51,8 @@ describe('GetAuthorController', () => {
       user: {
         sub: 'any_sub',
       },
+      params: {},
+      query: {},
     });
     expect(getAuthorUseCaseSpy.accessToken).toEqual({ sub: 'any_sub' });
   });
@@ -61,6 +63,8 @@ describe('GetAuthorController', () => {
       user: {
         sub: 'any_sub',
       },
+      params: {},
+      query: {},
     });
     expect(httpResponse).toEqual(
       HttpResponse.ok(AuthorViewModel.toHTTP(getAuthorUseCaseSpy.author)),
@@ -77,6 +81,8 @@ describe('GetAuthorController', () => {
       user: {
         sub: 'any_sub',
       },
+      params: {},
+      query: {},
     });
     expect(httpResponse).toEqual(HttpResponse.serverError());
   });

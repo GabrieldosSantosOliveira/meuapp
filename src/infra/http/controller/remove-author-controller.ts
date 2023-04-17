@@ -1,8 +1,8 @@
 import { HttpResponse } from '@/helpers/http';
 import { Controller } from '@/interface/controller';
 import { IHttpRequest, IHttpResponse } from '@/interface/http';
+import { DefaultFieldType } from '@/interface/index';
 import { IRemoveAuthorUseCase } from '@/interface/use-cases';
-import { DefaultFieldType } from '@/interface/validations';
 
 import { ExceptionFilter } from '../error';
 export interface RemoveAuthorControllerConstructorParams {

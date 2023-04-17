@@ -1,8 +1,11 @@
 import { HttpResponse } from '@/helpers/http';
 import { Controller } from '@/interface/controller';
-import { IHttpRequest, IHttpResponse } from '@/interface/http';
+import {
+  DefaultFieldType,
+  IHttpRequest,
+  IHttpResponse,
+} from '@/interface/http';
 import { IGetAuthorUseCase } from '@/interface/use-cases/get-author';
-import { DefaultFieldType } from '@/interface/validations';
 
 import { ExceptionFilter } from '../error';
 import { AuthorViewModel } from '../view-models/author-view-model';

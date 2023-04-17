@@ -38,6 +38,8 @@ describe('RemoveAuthorController', () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle({
       body: {},
+      params: {},
+      query: {},
       user: {
         sub: 'any_id',
       },
@@ -51,6 +53,8 @@ describe('RemoveAuthorController', () => {
       removeAuthorUseCase: removeAuthorUseCaseSpyWithError,
     });
     const httpResponse = await sut.handle({
+      params: {},
+      query: {},
       body: {},
       user: { sub: 'any_id' },
     });

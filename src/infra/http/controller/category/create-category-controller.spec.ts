@@ -1,12 +1,11 @@
 import { Category } from '@/app/entities';
-import { HttpResponse } from '@/helpers/http';
+import { HttpResponse, HttpStatus } from '@/helpers/http';
 import { IHttpRequest } from '@/interface/http';
 import {
   ICreateCategoryUseCase,
   ICreateCategoryUseCaseParams,
 } from '@/interface/use-cases';
 import { makeCategory } from '@/test/factories';
-import { InvalidParamError, MissingParamError } from '@/utils/http';
 
 import { CategoryViewModel } from '../../view-models/category-view-model';
 import {
@@ -44,24 +43,20 @@ const makeRequest = (
   return {
     user: { sub: 'any_id' },
     body: { title: 'any_title', ...params },
+    params: {},
+    query: {},
   };
 };
 describe('CreateCategoryController', () => {
   it('should return 400 if title is not provided', async () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle(makeRequest({ title: undefined }));
-    expect(httpResponse).toEqual(
-      HttpResponse.badRequest(new MissingParamError('title')),
-    );
+    expect(httpResponse.statusCode).toEqual(HttpStatus.BAD_REQUEST);
   });
   it('should return 400 if title is not empty', async () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle(makeRequest({ title: ' ' }));
-    expect(httpResponse).toEqual(
-      HttpResponse.badRequest(
-        new InvalidParamError('title should not be empty'),
-      ),
-    );
+    expect(httpResponse.statusCode).toEqual(HttpStatus.BAD_REQUEST);
   });
   it('should return 500 if CreateCategoryUseCase throw', async () => {
     const createCategoryUseCaseWithError = new CreateCategoryUseCaseWithError();
@@ -89,7 +84,11 @@ describe('CreateCategoryController', () => {
   });
   it('should return 500 if user is not provided', async () => {
     const { sut } = makeSut();
-    const httpResponse = await sut.handle({ body: { title: 'any_title' } });
+    const httpResponse = await sut.handle({
+      body: { title: 'any_title' },
+      params: {},
+      query: {},
+    });
     expect(httpResponse).toEqual(HttpResponse.serverError());
   });
 });

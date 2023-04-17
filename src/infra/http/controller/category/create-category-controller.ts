@@ -1,9 +1,14 @@
 import { HttpResponse } from '@/helpers/http';
-import { Controller } from '@/interface/controller';
-import { IHttpRequest, IHttpResponse } from '@/interface/http';
-import { ICreateCategoryUseCase } from '@/interface/use-cases';
-import { InvalidParamError, MissingParamError } from '@/utils/http';
+import {
+  IHttpRequest,
+  IHttpResponse,
+  Controller,
+  ICreateCategoryUseCase,
+} from '@/interface/index';
+import { InvalidParamError } from '@/utils/http';
+import { validate } from 'class-validator';
 
+import { CreateCategoryBodyDto } from '../../dtos/create-category-body.dto';
 import { ExceptionFilter } from '../../error';
 import { CategoryViewModel } from '../../view-models/category-view-model';
 export interface CreateCategoryControllerRequest {
@@ -20,19 +25,22 @@ export class CreateCategoryController implements Controller {
     request: IHttpRequest<CreateCategoryControllerRequest>,
   ): Promise<IHttpResponse> {
     try {
-      if (!request.body.title) {
-        return HttpResponse.badRequest(new MissingParamError('title'));
-      }
-      if (!request.body.title.trim()) {
-        return HttpResponse.badRequest(
-          new InvalidParamError('title should not be empty'),
-        );
-      }
       if (!request.user?.sub) {
         return HttpResponse.serverError();
       }
+      const createCategoryBodyDto = new CreateCategoryBodyDto();
+      Object.assign(createCategoryBodyDto, request.body);
+      const hasErrors = await validate(createCategoryBodyDto);
+      if (hasErrors.length > 0) {
+        return HttpResponse.badRequest(hasErrors);
+      }
+      if (!createCategoryBodyDto.title.trim()) {
+        return HttpResponse.badRequest(
+          new InvalidParamError('title should not be empty').message,
+        );
+      }
       const category = await this.params.createCategoryUseCase.handle({
-        title: request.body.title,
+        title: createCategoryBodyDto.title,
       });
       return HttpResponse.created(CategoryViewModel.toHTTP(category));
     } catch (error) {

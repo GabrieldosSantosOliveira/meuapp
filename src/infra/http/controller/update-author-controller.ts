@@ -31,7 +31,7 @@ export class UpdateAuthorController implements Controller {
       Object.assign(updateAuthorBodyDto, request.body);
       const hasErrors = await validate(updateAuthorBodyDto);
       if (hasErrors.length > 0) {
-        return HttpResponse.badRequest(hasErrors);
+        return HttpResponse.badRequest(new Error(JSON.stringify(hasErrors)));
       }
       await this.params.updateAuthorUseCase.handle({
         user: { sub: request.user['sub'] },
@@ -41,7 +41,6 @@ export class UpdateAuthorController implements Controller {
       });
       return HttpResponse.noContent();
     } catch (error) {
-      console.log(error);
       return ExceptionFilter.handle(error);
     }
   }

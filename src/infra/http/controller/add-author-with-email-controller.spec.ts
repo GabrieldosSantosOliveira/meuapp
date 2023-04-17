@@ -15,6 +15,8 @@ const makeRequest = (
   param: Partial<AddAuthorWithEmailRequest> = {},
 ): IHttpRequest<AddAuthorWithEmailRequest> => {
   return {
+    params: {},
+    query: {},
     body: {
       email: 'any_email@mail.com',
       firstName: 'any_first_name',
@@ -195,10 +197,9 @@ describe('Add Author With Email Controller', () => {
     });
     const httpResponse = await sut.handle(makeRequest());
     expect(httpResponse).toEqual(
-      HttpResponse.customError(
-        HttpStatus.CONFLICT,
-        new ConflictAuthorAlreadyExists(),
-      ),
+      HttpResponse.customError(HttpStatus.CONFLICT, {
+        error: new ConflictAuthorAlreadyExists(),
+      }),
     );
   });
   it('should return 500 if AddAuthorWithEmailUseCase throw Error', async () => {

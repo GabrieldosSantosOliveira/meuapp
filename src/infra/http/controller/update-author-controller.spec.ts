@@ -33,6 +33,8 @@ const makeSut = () => {
 const makeRequest = (
   params: Partial<UpdateAuthorControllerRequest> = {},
 ): IHttpRequest<UpdateAuthorControllerRequest> => ({
+  params: {},
+  query: {},
   body: {
     firstName: 'any_firstName',
     lastName: 'any_lastName',

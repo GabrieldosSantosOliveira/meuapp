@@ -28,6 +28,8 @@ const makeRequest = (
   params: Partial<CreateNoticeControllerRequest> = {},
 ): IHttpRequest<CreateNoticeControllerRequest> => {
   return {
+    params: {},
+    query: {},
     body: {
       description: 'any_description',
       title: 'any_description',
