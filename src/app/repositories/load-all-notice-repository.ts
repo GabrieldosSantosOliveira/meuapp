@@ -1,5 +1,8 @@
 import { Notice } from '../entities';
-
+export interface LoadAllNoticeRepositoryOptions {
+  page: number;
+  sizeForPage: number;
+}
 export interface LoadAllNoticeRepository {
-  findAll(): Promise<Notice[]>;
+  findAllByPage(options: LoadAllNoticeRepositoryOptions): Promise<Notice[]>;
 }
