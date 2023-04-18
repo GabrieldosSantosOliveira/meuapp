@@ -30,7 +30,7 @@ export class GetAllNoticeUseCase implements IGetAllNoticeUseCase {
     if (page - 1 > 0) {
       prev = new URL(`?page=${page - 1}`, BASE_URL).toString();
     }
-    if (page <= pages) {
+    if (page < pages) {
       next = new URL(`?page=${page + 1}`, BASE_URL).toString();
     }
     if (page > pages) prev = null;
