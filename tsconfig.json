@@ -20,7 +20,6 @@
       "@/infra/*": ["./src/infra/*"],
       "@/interface/*": ["./src/interface/*"],
       "@/main/*": ["./src/main/*"],
-      "@/validations/*": ["./src/validations/*"],
       "@/test/*": ["./test/*"],
       "@/utils/*": ["./src/utils/*"]
     }

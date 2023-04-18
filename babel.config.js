@@ -23,7 +23,6 @@ module.exports = {
           '@/interface': './src/interface',
           '@/main': './src/main',
           '@/test': './test',
-          '@/validations': './src/validations',
           '@/utils': './src/utils',
         },
       },
