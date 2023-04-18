@@ -1,9 +1,9 @@
-import { RemoveAuthorUseCase } from '@/app/use-cases/remove-author-use-case';
+import { RemoveAuthorUseCase } from '@/app/use-cases';
 import {
   PrismaLoadAuthorByIdRepository,
   PrismaRemoveAuthorRepository,
 } from '@/infra/database/prisma';
-import { RemoveAuthorController } from '@/infra/http/controller/remove-author-controller';
+import { RemoveAuthorController } from '@/infra/http/controller';
 
 import { prismaService } from '../lib';
 

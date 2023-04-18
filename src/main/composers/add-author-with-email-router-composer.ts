@@ -1,22 +1,15 @@
-import { AddAuthorWithEmailUseCase } from '@/app/use-cases/add-author-with-email-use-case';
+import { AddAuthorWithEmailUseCase } from '@/app/use-cases';
 import {
   PrismaCreateAuthorRepository,
   PrismaLoadAuthorByEmailRepository,
 } from '@/infra/database/prisma';
-import { AddAuthorWithEmailController } from '@/infra/http/controller/add-author-with-email-controller';
-import {
-  ValidateMissingParamsAdapter,
-  EmailValidatorAdapter,
-} from '@/validations/index';
+import { AddAuthorWithEmailController } from '@/infra/http/controller';
 
 import { bcryptAdapter } from '../lib/cryptography/bcrypt-adapter';
 import { prismaService } from '../lib/database/prisma';
 import { authService } from './../lib/cryptography/auth-service';
 export class AddAuthorWithEmailRouterComposer {
   public static route() {
-    const validateMissingParamsAdapter = new ValidateMissingParamsAdapter();
-    const emailValidatorAdapter = new EmailValidatorAdapter();
-
     const prismaCreateAuthorRepository = new PrismaCreateAuthorRepository(
       prismaService,
     );
@@ -29,9 +22,7 @@ export class AddAuthorWithEmailRouterComposer {
       loadAuthorByEmailRepository: prismaLoadAuthorByEmailRepository,
     });
     const addAuthorWithEmailController = new AddAuthorWithEmailController({
-      validateMissingParams: validateMissingParamsAdapter,
       addAuthorWithEmailUseCase: addAuthorWithEmailUseCase,
-      emailValidator: emailValidatorAdapter,
     });
     return { addAuthorWithEmailController };
   }

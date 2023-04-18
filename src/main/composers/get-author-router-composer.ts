@@ -1,6 +1,6 @@
-import { GetAuthorUseCase } from '@/app/use-cases/get-author-use-case';
+import { GetAuthorUseCase } from '@/app/use-cases';
 import { PrismaLoadAuthorByIdRepository } from '@/infra/database/prisma';
-import { GetAuthorController } from '@/infra/http/controller/get-author-controller';
+import { GetAuthorController } from '@/infra/http/controller';
 
 import { prismaService } from '../lib/database/prisma';
 export class GetAuthorRouterComposer {

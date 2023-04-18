@@ -1,9 +1,9 @@
-import { CreateCategoryUseCase } from '@/app/use-cases/category/create-category-use-case';
+import { CreateCategoryUseCase } from '@/app/use-cases';
 import {
   PrismaCreateCategoryRepository,
   PrismaLoadCategoryByTitleRepository,
 } from '@/infra/database/prisma';
-import { CreateCategoryController } from '@/infra/http/controller/category/create-category-controller';
+import { CreateCategoryController } from '@/infra/http/controller';
 
 import { prismaService } from '../lib';
 
