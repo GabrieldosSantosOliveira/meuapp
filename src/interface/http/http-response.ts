@@ -1,4 +1,4 @@
-export interface IHttpResponse {
-  body: unknown;
+export interface IHttpResponse<T = unknown> {
+  body: T;
   statusCode: number;
 }

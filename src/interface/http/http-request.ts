@@ -1,8 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Payload } from '../auth';
-import { DefaultFieldType } from '../validations';
-
-export interface IHttpRequest<T extends DefaultFieldType = DefaultFieldType> {
+export interface DefaultFieldType {
+  [key: number | string | symbol]: any;
+}
+export interface IHttpRequest<
+  T extends DefaultFieldType = DefaultFieldType,
+  Q extends DefaultFieldType = DefaultFieldType,
+  P extends DefaultFieldType = DefaultFieldType,
+> {
   body: T;
+  query: Q;
+  params: P;
   accessToken?: string;
   user?: Payload;
 }
