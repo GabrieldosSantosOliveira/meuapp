@@ -6,6 +6,8 @@ export class ExpressRouterAdapter {
   public static adapter(controller: Controller) {
     return async (req: Request, res: Response) => {
       const httpRequest: IHttpRequest = {
+        params: req.params,
+        query: req.query,
         body: req.body,
         user: req.user,
       };

@@ -8,6 +8,8 @@ export class ExpressMiddlewareAdapter {
     return async (req: Request, res: Response, next: NextFunction) => {
       try {
         const httpRequest: IHttpRequest = {
+          params: req.params,
+          query: req.query,
           body: req.body,
           accessToken: req.headers.authorization?.split(' ')?.[1],
         };
