@@ -1,4 +1,4 @@
-import { AuthMiddleware } from '@/infra/auth/middlewares/auth-middleware';
+import { AuthMiddleware } from '@/infra/auth';
 
 import { authService } from './../lib';
 export class AuthMiddlewareComposer {
