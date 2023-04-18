@@ -7,3 +7,5 @@ export * from './factory-hash-comparer';
 export * from './factory-throw-error';
 export * from './factory-auth-service-spy';
 export * from './factory-in-memory-category-repository';
+export * from './factory-in-memory-notice-repository';
+export * from './factory-date-with-less-two-hours';

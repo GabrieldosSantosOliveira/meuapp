@@ -5,3 +5,7 @@ export * from './save-author-repository';
 export * from './remove-author-repository';
 export * from './create-category-repository';
 export * from './load-category-by-title-repository';
+export * from './create-notice-repository';
+export * from './load-all-notice-repository';
+export * from './create-notice-repository';
+export * from './count-notice-repository';
