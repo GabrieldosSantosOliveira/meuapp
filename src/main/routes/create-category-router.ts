@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { ExpressRouterAdapter } from '../adapters/express-router-adapter';
+import { ExpressRouterAdapter } from '../adapters';
 import { CreateCategoryRouterComposer } from '../composers';
 import { auth } from '../middlewares';
 const CreateCategoryRoute = (router: Router) => {

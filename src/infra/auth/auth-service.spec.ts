@@ -1,5 +1,4 @@
-import { Payload } from '@/interface/auth';
-import { Decrypt, Encrypt } from '@/interface/cryptography';
+import { Payload, Decrypt, Encrypt } from '@/interface/index';
 
 import { AuthService, Params } from './auth-service';
 class EncryptAndDecryptSpy implements Encrypt, Decrypt {

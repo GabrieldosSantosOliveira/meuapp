@@ -1,7 +1,7 @@
 import { Author } from '@/app/entities';
-import { LoadAuthorByEmailRepository } from '@/app/repositories/load-author-by-email-repository';
+import { LoadAuthorByEmailRepository } from '@/app/repositories';
 
-import { PrismaAuthorMapper } from '../mappers/prisma-author-mapper';
+import { PrismaAuthorMapper } from '../mappers';
 import { PrismaService } from '../prisma-service';
 
 export class PrismaLoadAuthorByEmailRepository

@@ -4,7 +4,7 @@ import {
   LoadAllNoticeRepositoryOptions,
 } from '@/app/repositories';
 
-import { PrismaNoticeMapper } from '../../mappers/prisma-notice-mapper';
+import { PrismaNoticeMapper } from '../../mappers';
 import { PrismaService } from '../../prisma-service';
 
 export class PrismaLoadAllNoticeRepository implements LoadAllNoticeRepository {

@@ -7,7 +7,7 @@ import {
 } from '@/interface/index';
 import { validate } from 'class-validator';
 
-import { AddAuthorWithEmailBodyDto } from '../dtos/add-author-with-email-body.dto';
+import { AddAuthorWithEmailBodyDto } from '../dtos';
 import { ExceptionFilter } from '../error';
 
 export interface AddAuthorWithEmailRequest {

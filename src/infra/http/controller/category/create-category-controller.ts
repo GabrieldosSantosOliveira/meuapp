@@ -8,9 +8,9 @@ import {
 import { InvalidParamError } from '@/utils/http';
 import { validate } from 'class-validator';
 
-import { CreateCategoryBodyDto } from '../../dtos/create-category-body.dto';
+import { CreateCategoryBodyDto } from '../../dtos';
 import { ExceptionFilter } from '../../error';
-import { CategoryViewModel } from '../../view-models/category-view-model';
+import { CategoryViewModel } from '../../view-models';
 export interface CreateCategoryControllerRequest {
   title: string;
 }

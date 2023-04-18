@@ -5,9 +5,8 @@ import {
 } from '@/infra/database/prisma';
 import { AddAuthorWithEmailController } from '@/infra/http/controller';
 
-import { bcryptAdapter } from '../lib/cryptography/bcrypt-adapter';
-import { prismaService } from '../lib/database/prisma';
-import { authService } from './../lib/cryptography/auth-service';
+import { bcryptAdapter, prismaService, authService } from '../lib';
+
 export class AddAuthorWithEmailRouterComposer {
   public static route() {
     const prismaCreateAuthorRepository = new PrismaCreateAuthorRepository(

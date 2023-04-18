@@ -1,7 +1,10 @@
 import { HttpResponse } from '@/helpers/http';
-import { Controller } from '@/interface/controller';
-import { IHttpRequest, IHttpResponse } from '@/interface/http';
-import { ICreateNoticeUseCase } from '@/interface/use-cases/create-notice-use-case';
+import {
+  ICreateNoticeUseCase,
+  IHttpRequest,
+  IHttpResponse,
+  Controller,
+} from '@/interface/index';
 import { validate } from 'class-validator';
 
 import {

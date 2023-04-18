@@ -1,18 +1,20 @@
 import { HttpResponse, HttpStatus } from '@/helpers/http';
-import { IAuthService, Payload } from '@/interface/auth';
-import { IHttpRequest, IHttpResponse } from '@/interface/http';
-import { DefaultFieldType } from '@/interface/http/http-request';
-import { IMiddleware } from '@/interface/middlewares/middleware';
+import {
+  DefaultFieldType,
+  IMiddleware,
+  IHttpRequest,
+  IAuthService,
+  IMiddlewareResponse,
+} from '@/interface/index';
 export interface AuthMiddlewareParams {
   authService: IAuthService;
 }
+
 export class AuthMiddleware implements IMiddleware {
   constructor(private readonly params: AuthMiddlewareParams) {}
-  async handle(request: IHttpRequest<DefaultFieldType>): Promise<
-    IHttpResponse & {
-      user?: Payload;
-    }
-  > {
+  async handle(
+    request: IHttpRequest<DefaultFieldType>,
+  ): Promise<IMiddlewareResponse> {
     if (!request.accessToken) {
       return HttpResponse.unauthorizedError();
     }

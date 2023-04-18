@@ -7,7 +7,7 @@ import {
 } from '@/interface/index';
 import { validate } from 'class-validator';
 
-import { UpdateAuthorBodyDto } from '../dtos/update-author-body.dto';
+import { UpdateAuthorBodyDto } from '../dtos';
 import { ExceptionFilter } from '../error';
 
 export interface UpdateAuthorControllerRequest {

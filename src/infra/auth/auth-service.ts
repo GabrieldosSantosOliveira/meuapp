@@ -6,8 +6,7 @@ import {
   Payload,
   RefreshToken,
 } from '@/interface/index';
-import { UnauthorizedException } from '@/utils/http/exception/unauthorized-exception';
-import { InvalidParamError } from '@/utils/index';
+import { InvalidParamError, UnauthorizedException } from '@/utils/index';
 export interface Params {
   secretAccessToken: string;
   secretRefreshToken: string;

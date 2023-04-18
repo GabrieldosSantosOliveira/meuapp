@@ -1,14 +1,14 @@
 import { HttpResponse } from '@/helpers/http';
-import { Controller } from '@/interface/controller';
 import {
   DefaultFieldType,
   IHttpRequest,
   IHttpResponse,
-} from '@/interface/http';
-import { IGetAuthorUseCase } from '@/interface/use-cases/get-author';
+  IGetAuthorUseCase,
+  Controller,
+} from '@/interface/index';
 
 import { ExceptionFilter } from '../error';
-import { AuthorViewModel } from '../view-models/author-view-model';
+import { AuthorViewModel } from '../view-models';
 export interface GetAuthorControllerParams {
   getAuthorUseCase: IGetAuthorUseCase;
 }

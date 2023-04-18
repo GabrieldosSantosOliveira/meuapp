@@ -1,5 +1,4 @@
-import { Payload } from '@/interface/auth';
-import { IGetAuthorUseCase } from '@/interface/use-cases';
+import { Payload, IGetAuthorUseCase } from '@/interface/index';
 import { AuthorNotFoundException } from '@/utils/index';
 
 import { Author } from '../entities';

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { ExpressRouterAdapter } from '../adapters/express-router-adapter';
-import { AddAuthorWithEmailRouterComposer } from '../composers/add-author-with-email-router-composer';
+import { ExpressRouterAdapter } from '../adapters';
+import { AddAuthorWithEmailRouterComposer } from '../composers';
 const addAuthorWithEmailRoute = (router: Router) => {
   const { addAuthorWithEmailController } =
     AddAuthorWithEmailRouterComposer.route();

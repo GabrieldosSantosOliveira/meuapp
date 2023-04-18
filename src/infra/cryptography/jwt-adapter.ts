@@ -5,7 +5,7 @@ import {
   OptionsEncrypt,
   Payload,
 } from '@/interface/index';
-import { UnauthorizedException } from '@/utils/http/exception/unauthorized-exception';
+import { UnauthorizedException } from '@/utils/http';
 import jwt from 'jsonwebtoken';
 export class JwtAdapter implements Encrypt, Decrypt {
   async decrypt(

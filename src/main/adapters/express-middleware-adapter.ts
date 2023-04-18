@@ -1,6 +1,5 @@
 import { ExceptionFilter } from '@/infra/http/error';
-import { IHttpRequest } from '@/interface/http';
-import { IMiddleware } from '@/interface/middlewares/middleware';
+import { IHttpRequest, IMiddleware } from '@/interface/index';
 import { NextFunction, Request, Response } from 'express';
 
 export class ExpressMiddlewareAdapter {

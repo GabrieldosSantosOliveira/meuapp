@@ -1,8 +1,6 @@
 import { Notice } from '@/app/entities';
 
-import { AuthorViewModel } from './author-view-model';
-import { CategoryViewModel } from './category-view-model';
-import { ContentViewModel } from './content-view-model';
+import { AuthorViewModel, CategoryViewModel, ContentViewModel } from './';
 
 export class NoticeViewModel {
   public static toHTTP(notice: Notice) {

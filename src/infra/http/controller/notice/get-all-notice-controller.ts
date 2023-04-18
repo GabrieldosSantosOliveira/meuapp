@@ -1,14 +1,14 @@
 import { HttpResponse } from '@/helpers/http';
-import { Controller } from '@/interface/controller';
 import {
+  Controller,
   DefaultFieldType,
   IHttpRequest,
   IHttpResponse,
-} from '@/interface/http';
-import { IGetAllNoticeUseCase } from '@/interface/use-cases';
+  IGetAllNoticeUseCase,
+} from '@/interface/index';
 
 import { ExceptionFilter } from '../../error';
-import { NoticeViewModel } from '../../view-models/notice-view-model';
+import { NoticeViewModel } from '../../view-models';
 export interface GetAllNoticeControllerConstructorParams {
   getAllNoticeUseCase: IGetAllNoticeUseCase;
   BASE_URL: string;

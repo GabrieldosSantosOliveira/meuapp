@@ -1,6 +1,8 @@
 import { GetAllNoticeUseCase } from '@/app/use-cases';
-import { PrismaCountNoticeRepository } from '@/infra/database/prisma';
-import { PrismaLoadAllNoticeRepository } from '@/infra/database/prisma';
+import {
+  PrismaCountNoticeRepository,
+  PrismaLoadAllNoticeRepository,
+} from '@/infra/database/prisma';
 import { GetAllNoticeController } from '@/infra/http/controller';
 
 import { env } from '../config';

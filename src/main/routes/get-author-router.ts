@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { ExpressRouterAdapter } from '../adapters/express-router-adapter';
-import { GetAuthorRouterComposer } from '../composers/get-author-router-composer';
+import { ExpressRouterAdapter } from '../adapters';
+import { GetAuthorRouterComposer } from '../composers';
 import { auth } from '../middlewares';
 const getAuthorRoute = async (router: Router) => {
   const { getAuthorController } = GetAuthorRouterComposer.route();

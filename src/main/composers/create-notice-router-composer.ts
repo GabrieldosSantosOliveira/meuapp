@@ -1,9 +1,9 @@
 import { CreateNoticeUseCase } from '@/app/use-cases';
 import {
+  PrismaCreateNoticeRepository,
   PrismaLoadAuthorByIdRepository,
   PrismaLoadCategoryByTitleRepository,
 } from '@/infra/database/prisma';
-import { PrismaCreateNoticeRepository } from '@/infra/database/prisma';
 import { CreateNoticeController } from '@/infra/http/controller';
 
 import { prismaService } from '../lib';

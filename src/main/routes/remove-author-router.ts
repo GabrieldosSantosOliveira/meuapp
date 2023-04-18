@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { ExpressRouterAdapter } from '../adapters/express-router-adapter';
+import { ExpressRouterAdapter } from '../adapters';
 import { RemoveAuthorRouterComposer } from '../composers';
 import { auth } from '../middlewares';
 const removeAuthorRouter = async (router: Router) => {

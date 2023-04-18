@@ -1,8 +1,7 @@
 import { Notice } from '@/app/entities';
 import { CreateNoticeRepository } from '@/app/repositories';
 
-import { PrismaContentMapper } from '../../mappers';
-import { PrismaNoticeMapper } from '../../mappers/prisma-notice-mapper';
+import { PrismaContentMapper, PrismaNoticeMapper } from '../../mappers';
 import { PrismaService } from '../../prisma-service';
 
 export class PrismaCreateNoticeRepository implements CreateNoticeRepository {

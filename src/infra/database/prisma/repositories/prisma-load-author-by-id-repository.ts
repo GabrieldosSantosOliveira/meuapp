@@ -1,7 +1,7 @@
 import { Author } from '@/app/entities';
 import { LoadAuthorByIdRepository } from '@/app/repositories';
 
-import { PrismaAuthorMapper } from '../mappers/prisma-author-mapper';
+import { PrismaAuthorMapper } from '../mappers';
 import { PrismaService } from '../prisma-service';
 
 export class PrismaLoadAuthorByIdRepository
