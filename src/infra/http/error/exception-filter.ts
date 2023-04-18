@@ -5,8 +5,12 @@ import { HttpException } from '@/utils/http';
 
 export class ExceptionFilter {
   public static handle(error: any): IHttpResponse {
+    console.log(error);
     if (error instanceof HttpException) {
-      return HttpResponse.customError(error.statusCode, error.error);
+      return HttpResponse.customError(error.getStatusCode(), {
+        error: error.getOptions().error,
+        cause: error.getOptions()?.cause,
+      });
     }
     return HttpResponse.serverError();
   }
