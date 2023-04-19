@@ -1,8 +1,7 @@
 import { Notice, NoticeProps } from '@/app/entities';
 
-import { makeAuthor } from './factory-author';
-import { makeCategory } from './factory-category';
-import { makeContent } from './factory-content';
+import { makeAuthor, makeCategory, makeContent } from './';
+
 export const makeNotice = (notice: Partial<NoticeProps> = {}) => {
   return new Notice({
     author: makeAuthor(),

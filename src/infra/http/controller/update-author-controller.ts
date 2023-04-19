@@ -15,11 +15,13 @@ export interface UpdateAuthorControllerRequest {
   lastName?: string;
   picture?: string;
 }
-export interface UpdateAuthorControllerParams {
+export interface UpdateAuthorControllerConstructorParams {
   updateAuthorUseCase: IUpdateAuthorUseCase;
 }
 export class UpdateAuthorController implements Controller {
-  constructor(private readonly params: UpdateAuthorControllerParams) {}
+  constructor(
+    private readonly params: UpdateAuthorControllerConstructorParams,
+  ) {}
   async handle(
     request: IHttpRequest<UpdateAuthorControllerRequest>,
   ): Promise<IHttpResponse> {
