@@ -1,4 +1,6 @@
 import { HttpResponse } from '@/helpers/http';
+import { Payload } from '@/interface/auth';
+import { IHttpRequest } from '@/interface/http';
 import { IRemoveAuthorUseCase } from '@/interface/use-cases';
 
 import {
@@ -33,17 +35,18 @@ const makeSut = (
   });
   return { removeAuthorUseCaseSpy, sut };
 };
+const makeRequest = (user: Partial<Payload> = {}): IHttpRequest => {
+  return {
+    params: {},
+    query: {},
+    body: {},
+    user: { sub: 'any_id', ...user },
+  };
+};
 describe('RemoveAuthorController', () => {
   it('should return 204 if success', async () => {
     const { sut } = makeSut();
-    const httpResponse = await sut.handle({
-      body: {},
-      params: {},
-      query: {},
-      user: {
-        sub: 'any_id',
-      },
-    });
+    const httpResponse = await sut.handle(makeRequest());
     expect(httpResponse).toEqual(HttpResponse.noContent());
   });
   it('should return 500 if throw error', async () => {
@@ -52,12 +55,11 @@ describe('RemoveAuthorController', () => {
     const { sut } = makeSut({
       removeAuthorUseCase: removeAuthorUseCaseSpyWithError,
     });
-    const httpResponse = await sut.handle({
-      params: {},
-      query: {},
-      body: {},
-      user: { sub: 'any_id' },
-    });
+    const httpResponse = await sut.handle(makeRequest());
     expect(httpResponse).toEqual(HttpResponse.serverError());
+  });
+  it('should return 500 if user is not provided', async () => {
+    const { sut } = makeSut();
+    await sut.handle(makeRequest({ sub: undefined }));
   });
 });

@@ -87,5 +87,13 @@ describe('Auth Service', () => {
         async () => await sut.generateRefreshToken('any_identifier'),
       ).rejects.toThrow();
     });
+    it('should return accessToken and refreshToken', async () => {
+      const { sut } = makeSut();
+      const res = await sut.generateRefreshTokenAndAccessToken('any_id');
+      expect(res).toEqual({
+        accessToken: 'encrypt',
+        refreshToken: 'encrypt',
+      });
+    });
   });
 });
