@@ -8,3 +8,4 @@ export * from './create-notice-router-composer';
 export * from './get-all-notice-route-composer';
 export * from './get-all-notice-by-category-router-composer';
 export * from './refresh-token-router-composer';
+export * from './login-router-composer';
