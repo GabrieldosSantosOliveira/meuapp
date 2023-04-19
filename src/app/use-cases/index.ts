@@ -4,3 +4,4 @@ export * from './update-author-use-case';
 export * from './remove-author-use-case';
 export * from './category';
 export * from './notice';
+export * from './auth';
