@@ -10,8 +10,9 @@ import {
 } from './login-controller';
 class LoginUseCaseSpy implements ILoginUseCase {
   accessToken = 'any_access_token';
+  refreshToken = 'any_refresh_token';
   async handle(): Promise<ILoginUseCaseResponse> {
-    return { accessToken: this.accessToken };
+    return { accessToken: this.accessToken, refreshToken: this.refreshToken };
   }
 }
 class LoginUseCaseWithError implements ILoginUseCase {
@@ -64,7 +65,10 @@ describe('', () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle(makeRequest());
     expect(httpResponse.statusCode).toBe(HttpStatus.OK);
-    expect(httpResponse.body).toEqual({ accessToken: 'any_access_token' });
+    expect(httpResponse.body).toEqual({
+      accessToken: 'any_access_token',
+      refreshToken: 'any_refresh_token',
+    });
   });
   it('should return 500 if LoginUseCase throw', async () => {
     const { sut } = makeSut({ loginUseCase: new LoginUseCaseWithError() });

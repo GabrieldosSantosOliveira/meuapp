@@ -33,11 +33,12 @@ export class LoginController implements Controller {
       if (hasErrors.length > 0) {
         return HttpResponse.badRequest(hasErrors);
       }
-      const { accessToken } = await this.params.loginUseCase.handle({
-        email: loginBodyDto.email,
-        password: loginBodyDto.password,
-      });
-      return HttpResponse.ok({ accessToken });
+      const { accessToken, refreshToken } =
+        await this.params.loginUseCase.handle({
+          email: loginBodyDto.email,
+          password: loginBodyDto.password,
+        });
+      return HttpResponse.ok({ accessToken, refreshToken });
     } catch (error) {
       return ExceptionFilter.handle(error);
     }
