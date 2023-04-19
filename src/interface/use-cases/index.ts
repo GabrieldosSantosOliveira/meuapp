@@ -5,3 +5,4 @@ export * from './remove-author-use-case';
 export * from './create-category-use-case';
 export * from './create-notice-use-case';
 export * from './get-all-notice-use-case';
+export * from './get-all-notice-by-category-use-case';
