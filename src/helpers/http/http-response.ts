@@ -25,12 +25,6 @@ export class HttpResponse {
       body: { error: new UnauthorizedError().message },
     };
   }
-  static notFound(error: Error): IHttpResponse {
-    return {
-      body: { error: error.message },
-      statusCode: HttpStatus.NOT_FOUND,
-    };
-  }
   static noContent(): IHttpResponse {
     return {
       body: undefined,
@@ -43,18 +37,7 @@ export class HttpResponse {
       statusCode: HttpStatus.CREATED,
     };
   }
-  static conflict(error: Error): IHttpResponse {
-    return {
-      body: { error: error.message },
-      statusCode: HttpStatus.CONFLICT,
-    };
-  }
-  static forbidden(error: Error): IHttpResponse {
-    return {
-      body: { error: error.message },
-      statusCode: HttpStatus.FORBIDDEN,
-    };
-  }
+
   static badRequest(error: unknown): IHttpResponse {
     return {
       body: { error },
