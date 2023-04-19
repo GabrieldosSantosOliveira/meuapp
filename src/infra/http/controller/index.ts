@@ -5,3 +5,4 @@ export * from './get-author-controller';
 export * from './remove-author-controller';
 export * from './update-author-controller';
 export * from './auth';
+export * from './add-author-with-google-provider-controller';
