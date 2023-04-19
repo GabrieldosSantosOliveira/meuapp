@@ -12,7 +12,8 @@
     "test:integration": "npm run test -- -c jest-integration-config.ts --watch",
     "test:unit": "npm run test -- -c jest-unit-config.ts --watch",
     "test": "jest --passWithNoTests --runInBand --verbose",
-    "test:staged": "jest --passWithNoTests --runInBand --verbose",
+    "test:staged": "npm run test",
+    "test:ci": "npm test -- --coverage",
     "prepare": "husky install"
   },
   "repository": {
