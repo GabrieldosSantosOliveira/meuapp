@@ -1,4 +1,5 @@
-export interface IHttpResponse<T = unknown> {
-  body: T;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export interface IHttpResponse {
+  body: any;
   statusCode: number;
 }
