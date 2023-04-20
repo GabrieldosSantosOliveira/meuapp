@@ -9,3 +9,4 @@ export * from './factory-auth-service-spy';
 export * from './factory-in-memory-category-repository';
 export * from './factory-in-memory-notice-repository';
 export * from './factory-date-with-less-two-hours';
+export * from './factory-date-with-more-two-hours';
