@@ -11,3 +11,4 @@ export * from './login-use-case';
 export * from './add-author-with-google-provider-use-case';
 export * from './forgot-password-use-case';
 export * from './reset-password-use-case';
+export * from './get-one-notice-use-case';
