@@ -12,3 +12,4 @@ export * from './login-router-composer';
 export * from './add-author-with-google-provider-router-composer';
 export * from './forgot-password-router-composer';
 export * from './reset-password-router-composer';
+export * from './get-one-notice-router-composer';
