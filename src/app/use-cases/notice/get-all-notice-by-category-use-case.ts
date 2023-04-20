@@ -44,7 +44,7 @@ export class GetAllNoticeByCategoryUseCase
       ),
     ]);
     const pages = Math.ceil(countOfNotices / SIZE_FOR_PAGE);
-    if (page - 1 > 0) {
+    if (page - 1 > 0 && page <= pages) {
       prev = new URL(
         `/api/notice/category/${categoryExists.title}?page=${page - 1}`,
         BASE_URL,
@@ -56,7 +56,6 @@ export class GetAllNoticeByCategoryUseCase
         BASE_URL,
       ).toString();
     }
-    if (page > pages) prev = null;
     const info: Info = {
       count: countOfNotices,
       pages,
