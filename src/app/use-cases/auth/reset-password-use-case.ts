@@ -36,10 +36,7 @@ export class ResetPasswordUseCase implements IResetPasswordUseCase {
       throw new UnauthorizedException();
     }
     const resetPasswordHash = await this.params.hash.hash(data.passwordReset);
-    authorExists.password = resetPasswordHash;
-    authorExists.updatedAt = new Date();
-    authorExists.resetPasswordExpires = undefined;
-    authorExists.resetPasswordToken = undefined;
+    authorExists.resetPassword(resetPasswordHash);
     await this.params.saveAuthorRepository.save(authorExists);
   }
 }

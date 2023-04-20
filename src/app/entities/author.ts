@@ -90,4 +90,10 @@ export class Author {
   public set password(password: string | undefined) {
     this.props.password = password;
   }
+  public resetPassword(password: string) {
+    this.password = password;
+    this.updatedAt = new Date();
+    this.resetPasswordExpires = undefined;
+    this.resetPasswordToken = undefined;
+  }
 }
