@@ -7,6 +7,7 @@ import {
   LoadAllNoticeByCategoryRepositoryOptions,
   LoadAllNoticeRepository,
   LoadAllNoticeRepositoryOptions,
+  LoadNoticeByIdRepository,
 } from '@/app/repositories';
 
 export class InMemoryNoticeRepository
@@ -15,9 +16,17 @@ export class InMemoryNoticeRepository
     CreateNoticeRepository,
     CountNoticeRepository,
     CountNoticeByCategoryRepository,
-    LoadAllNoticeByCategoryRepository
+    LoadAllNoticeByCategoryRepository,
+    LoadNoticeByIdRepository
 {
-  public notices: Notice[] = [];
+  private notices: Notice[] = [];
+  async findById(id: string): Promise<Notice | null> {
+    const notice = this.notices.find((notice) => notice.id === id);
+    if (!notice) {
+      return null;
+    }
+    return notice;
+  }
   async findAllByCategoryByPage(
     options: LoadAllNoticeByCategoryRepositoryOptions,
   ): Promise<Notice[]> {

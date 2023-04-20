@@ -11,3 +11,4 @@ export * from './create-notice-repository';
 export * from './count-notice-repository';
 export * from './count-notice-by-category-repository';
 export * from './load-all-notice-by-category-repository';
+export * from './load-notice-by-id-repository';
