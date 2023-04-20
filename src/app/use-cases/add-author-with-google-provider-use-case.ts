@@ -40,6 +40,7 @@ export class AddAuthorWithGoogleProviderUseCase
       await this.params.loadAuthorByEmailRepository.findByEmail(data.email);
     if (authorExists) {
       authorExists.googleId = data.id;
+      authorExists.updatedAt = new Date();
       await this.params.saveAuthorRepository.save(authorExists);
       const { accessToken, refreshToken } =
         await this.params.authService.generateRefreshTokenAndAccessToken(
