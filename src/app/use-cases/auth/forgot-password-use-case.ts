@@ -25,13 +25,11 @@ export class ForgotPasswordUseCase implements IForgotPasswordUseCase {
     if (!authorExists) {
       throw new AuthorNotFoundException();
     }
-    authorExists.resetPasswordToken = String(
-      this.params.serviceRandomNumber.generateRandomNumber({ length: 6 }),
+    authorExists.forgotPassword(
+      String(
+        this.params.serviceRandomNumber.generateRandomNumber({ length: 6 }),
+      ),
     );
-    const nowDate = new Date();
-    const resetPasswordExpires = nowDate.setHours(nowDate.getHours() + 2);
-    authorExists.resetPasswordExpires = new Date(resetPasswordExpires);
-    authorExists.updatedAt = new Date();
     await this.params.saveAuthorRepository.save(authorExists);
     await this.params.mailProvider.sendEmail({
       from: {
@@ -39,7 +37,9 @@ export class ForgotPasswordUseCase implements IForgotPasswordUseCase {
         email: 'no_reply@blog.com.br',
       },
       to: data.email,
-      body: this.generateBodyResetPassword(authorExists.resetPasswordToken),
+      body: this.generateBodyResetPassword(
+        authorExists.resetPasswordToken as string,
+      ),
       subject: 'Esqueceu a senha',
     });
   }

@@ -1,4 +1,5 @@
 import { Replace } from '@/helpers/index';
+import { makeDateWithMoreHours } from '@/utils/date';
 import { randomUUID } from 'node:crypto';
 export interface AuthorProps {
   id: string;
@@ -92,8 +93,13 @@ export class Author {
   }
   public resetPassword(password: string) {
     this.password = password;
-    this.updatedAt = new Date();
     this.resetPasswordExpires = undefined;
     this.resetPasswordToken = undefined;
+    this.updatedAt = new Date();
+  }
+  public forgotPassword(resetPasswordToken: string) {
+    this.resetPasswordToken = resetPasswordToken;
+    this.resetPasswordExpires = makeDateWithMoreHours(2);
+    this.updatedAt = new Date();
   }
 }
