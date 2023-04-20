@@ -11,3 +11,4 @@ export * from './refresh-token-router-composer';
 export * from './login-router-composer';
 export * from './add-author-with-google-provider-router-composer';
 export * from './forgot-password-router-composer';
+export * from './reset-password-router-composer';

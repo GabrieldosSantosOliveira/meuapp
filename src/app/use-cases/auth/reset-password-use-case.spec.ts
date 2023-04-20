@@ -88,4 +88,24 @@ describe('ResetPasswordUseCase', () => {
     );
     expect(authorAfterUpdate?.password).toBe(hashAndHashComparer.hashText);
   });
+  it('should remove resetPasswordToken and resetPasswordExpires if success', async () => {
+    const { sut, inMemoryAuthorRepository } = makeSut();
+    await inMemoryAuthorRepository.create(
+      makeAuthor({
+        email: 'any_email',
+        resetPasswordToken: 'any_token',
+        resetPasswordExpires: makeDateWithMoreTwoHours(),
+      }),
+    );
+    await sut.handle({
+      email: 'any_email',
+      passwordReset: 'any_reset_password',
+      resetPasswordToken: 'any_token',
+    });
+    const authorAfterUpdate = await inMemoryAuthorRepository.findByEmail(
+      'any_email',
+    );
+    expect(authorAfterUpdate?.resetPasswordExpires).toBeFalsy();
+    expect(authorAfterUpdate?.resetPasswordToken).toBeFalsy();
+  });
 });
