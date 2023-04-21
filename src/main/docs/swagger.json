@@ -1,0 +1,1078 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "servidor-projmatch",
+    "version": "1.0.0",
+    "description": "API para atender as necessidades do projeto ProjMatch",
+    "contact": {
+      "name": "Gabriel dos Santos Oliveira",
+      "url": "https://www.linkedin.com/in/gabriel-dos-santos-oliveira-24b67b243/",
+      "email": "gabriel.oliveira16@estudante.ifms.edu.br"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4444",
+      "description": "Servidor local"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "post": {
+        "summary": "Cria um novo usuário",
+        "description": "Cria um novo usuário no banco de dados",
+        "tags": ["User"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "example": {
+                "firstName": "Gabriel",
+                "lastName": "dos Santos Oliveira",
+                "email": "gabriel.oliveira16@estudante.ifms.edu.br",
+                "password": "123456",
+                "cpf": "12495648088",
+                "birthDate": "2005-07-19T00:00:00.000Z",
+                "formation": "Ciência da Computação",
+                "ddPhone": "67",
+                "phoneNumber": "999982019"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuário criado com sucesso"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      },
+      "get": {
+        "summary": "Lista todos os usuários",
+        "description": "Lista todos os usuários do banco de dados",
+        "tags": ["User"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuários listados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta um usuário",
+        "description": "Deleta um usuário do banco de dados",
+        "tags": ["User"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleta listado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um usuário",
+        "description": "Atualiza um usuário do banco de dados",
+        "tags": ["User"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "example": {
+                "firstName": "Mathias",
+                "lastName": "dos Santos Oliveira",
+                "email": "gabriel.oliveira17@estudante.ifms.edu.br"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Atualiza listado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/me": {
+      "get": {
+        "summary": "Lista um usuário",
+        "description": "Lista um usuário do banco de dados",
+        "tags": ["User"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Usuário listado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No token provided"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/authenticate": {
+      "post": {
+        "summary": "Autentica um usuário",
+        "description": "Autentica um usuário no banco de dados",
+        "tags": ["Authenticate"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Authenticate"
+              },
+              "example": {
+                "identifier": "87609292001",
+                "password": "13972410"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário autenticado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jwt": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No token provided"
+          }
+        }
+      }
+    },
+    "/project": {
+      "get": {
+        "summary": "Lista todos os projetos",
+        "description": "Lista todos os projetos do banco de dados",
+        "tags": ["Project"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Projetos listados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Project"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria um projeto",
+        "description": "Cria um projeto no banco de dados",
+        "tags": ["Project"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Project"
+              },
+              "example": {
+                "title": "Projeto 1",
+                "description": "Lorem ipsum",
+                "area": "Lorenm ipsum dolor sit amet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Projeto criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/project/{id}": {
+      "get": {
+        "summary": "Lista um projeto",
+        "description": "Lista um projeto do banco de dados",
+        "tags": ["Project"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do projeto",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Projeto listado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No token provided"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um projeto",
+        "description": "Atualiza um projeto do banco de dados",
+        "tags": ["Project"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do projeto",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Project"
+              },
+              "example": {
+                "title": "Projeto 1",
+                "description": "Lorem ipsum",
+                "area": "Lorenm ipsum dolor sit amet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Projeto atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Projeto atualizado com sucesso"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No token provided"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta um projeto",
+        "description": "Deleta um projeto do banco de dados",
+        "tags": ["Project"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do projeto",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Projeto deletado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Projeto deletado com sucesso"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/project/user/{id}": {
+      "get": {
+        "summary": "Lista todos os projetos de um usuário",
+        "description": "Lista todos os projetos de um usuário do banco de dados",
+        "tags": ["Project"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do usuário",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Projetos listados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Project"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/project/collaborator/{id}": {
+      "post": {
+        "summary": "Adiciona um colaborador a um projeto",
+        "description": "Adiciona um colaborador a um projeto do banco de dados",
+        "tags": ["Project"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do projeto",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Project"
+              },
+              "example": {
+                "title": "Projeto 1",
+                "description": "Lorem ipsum",
+                "area": "Lorenm ipsum dolor sit amet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Colaborador adicionado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Colaborador adicionado com sucesso"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No token provided"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/member": {
+      "get": {
+        "summary": "Lista todos os membros de todos os projetos",
+        "description": "Lista todos os membros de todos os projetos",
+        "tags": ["Member"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista todos os membros de todos os projetos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Member"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria um novo membro para um projeto",
+        "description": "Cria um novo membro para um projeto",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Member"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Member"
+              },
+              "example": {
+                "userId": "0da564d8-2e03-4c68-911f-c480d1660a49",
+                "projectId": "0da564d8-2e03-4c68-911f-c480d1660a49"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Membro criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Membro criado com sucesso"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/member/{id}": {
+      "get": {
+        "summary": "Lista um membro de um projeto",
+        "description": "Lista um membro de um projeto",
+        "tags": ["Member"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do membro",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista um membro de um projeto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Member"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um membro de um projeto",
+        "description": "Atualiza um membro de um projeto",
+        "tags": ["Member"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do membro",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Member"
+              },
+              "example": {
+                "userId": "0da564d8-2e03-4c68-911f-c480d1660a49",
+                "projectId": "0da564d8-2e03-4c68-911f-c480d1660a49"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Atualiza um membro de um projeto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Membro atualizado com sucesso"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No token provided"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta um membro de um projeto",
+        "description": "Deleta um membro de um projeto",
+        "tags": ["Member"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do membro",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleta um membro de um projeto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Membro deletado com sucesso"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No token provided"
+          }
+        }
+      }
+    },
+    "/image": {
+      "post": {
+        "summary": "Adiciona uma imagem a um usuário",
+        "description": "Adiciona uma imagem a um usuário",
+        "tags": ["Image"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Adiciona uma imagem a um usuário",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta uma imagem de um usuário",
+        "description": "Deleta uma imagem de um usuário",
+        "tags": ["Image"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleta uma imagem de um usuário",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Image"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/refresh-token": {
+      "post": {
+        "summary": "Realiza o refresh-Token",
+        "description": "Realiza o refresh-Token",
+        "tags": ["Authenticate"],
+
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refreshToken": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "userId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Realiza o refresh-Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "cpf": {
+            "type": "string"
+          },
+          "ddPhone": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "formation": {
+            "type": "string"
+          },
+          "university": {
+            "type": "string",
+            "default": "IFMS"
+          },
+          "status": {
+            "type": "string",
+            "default": "STUDENT",
+            "enum": ["STUDENT", "TEACHER"]
+          },
+          "description": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "default": "USER",
+            "enum": ["USER", "ADMIN"]
+          },
+          "imageId": {
+            "type": "string"
+          },
+          "Image": {
+            "type": "array",
+
+            "items": {
+              "$ref": "#/components/schemas/Image"
+            }
+          }
+        }
+      },
+      "Authenticate": {
+        "type": "object",
+        "properties": {
+          "identifier": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Project": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "area": {
+            "type": "string"
+          }
+        }
+      },
+      "Member": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["OWNER", "EDIT", "READ", "WAIT"],
+            "default": "WAIT"
+          }
+        }
+      },
+      "Image": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

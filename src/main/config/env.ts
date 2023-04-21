@@ -9,7 +9,7 @@ export const env = {
   SECRET_ACCESS_TOKEN: process.env.SECRET_ACCESS_TOKEN || 'any_access_token',
   SECRET_REFRESH_TOKEN: process.env.SECRET_REFRESH_TOKEN || 'any_refresh_token',
   BASE_URL: process.env.BASE_URL || `http://localhost:${PORT}`,
-  SIZE_FOR_PAGE: Number(process.env.BASE_URL) || 20,
+  SIZE_FOR_PAGE: Number(process.env.SIZE_FOR_PAGE) || 20,
   MAIL_HOST: process.env.MAIL_HOST || 'sandbox.smtp.mailtrap.io',
   MAIL_PORT: Number(process.env.MAIL_PORT) || 465,
   MAIL_SECURE: MAIL_SECURE || false,
