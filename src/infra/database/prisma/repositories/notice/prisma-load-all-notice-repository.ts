@@ -17,6 +17,9 @@ export class PrismaLoadAllNoticeRepository implements LoadAllNoticeRepository {
       include: { Author: true, Category: true, Content: true },
       take: options.sizeForPage,
       skip: SKIP,
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
     return rawNotices.map((rawNotice) =>

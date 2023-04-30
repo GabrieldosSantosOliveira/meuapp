@@ -23,6 +23,9 @@ export class PrismaLoadAllNoticeByCategoryRepository
       where: {
         categoryId: rawCategory.id,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
     return rawNotices.map((rawNotice) =>
