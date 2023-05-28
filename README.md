@@ -7,7 +7,7 @@ A Api-News é uma que permite pessoas se cadastrarem para postagem de noticias.
 - Para organizar a aplicação foi utilizada uma arquitetura limpa
 - Utilizado o docker compose para levantar todas as ferramentas de desenvolvimento necessarias
 - Utilizado repositorios em memoria para testar a aplicação
-
+- Foi criado a caso de uso de recuperação de senha do usuario na aplicação utilizando o envio de email com o nodemailer
 ## 🛠️ Tecnologias
 
 - [TypeScript](https://www.typescriptlang.org/)
